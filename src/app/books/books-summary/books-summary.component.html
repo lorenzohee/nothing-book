@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar *ngIf="book$ | async as book">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{book.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="book$ | async as book">
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img [src]="book.cover || '../../../assets/book_default.jpg'">
+          </ion-thumbnail>
+          <ion-label>
+            <h3>{{book.name}}</h3>
+            <p>作者: {{book.author}}</p>
+            <p>
+              <ion-button [routerLink]="['/books/'+book._id]" >
+                <ion-icon name="eye-outline"></ion-icon>阅读
+              </ion-button>
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p>
+          摘要 | 评论
+        </p>
+        <ion-text>
+          {{book.abstract}}
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

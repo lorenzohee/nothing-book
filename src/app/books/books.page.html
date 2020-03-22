@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>books
+      <a [routerLink]="['/books/new']">
+      <ion-icon name="add" ></ion-icon></a>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-card *ngFor="let book of books$ | async" [routerLink]="['/books/summary/'+book._id]">
+      <img [src]="book.cover || '../../assets/book_default.jpg'" style="width: 100%" />
+      <ion-card-header>
+        <ion-card-subtitle>{{ book.name }}</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+  </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

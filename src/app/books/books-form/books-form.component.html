@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>New Book</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]='bookForm'>
+    <ion-item>
+      <ion-label position="floating">输入书籍名称*</ion-label>
+      <ion-input type="text" required=true formControlName='name'></ion-input>
+    </ion-item>
+    <ion-row>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="floating">输入书籍作者</ion-label>
+          <ion-input type="text" formControlName='author'></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="floating">输入展示时间</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY" min="2020-01-14" max="2212-12-09" value="2020-02-23" formControlName='showTime'></ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-item>
+      <ion-label position="floating">输入书籍介绍*</ion-label>
+      <ion-textarea type="text" required=true formControlName='abstract'></ion-textarea>
+    </ion-item>
+    <ion-row>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label>请选择书籍类型*</ion-label>
+          <ion-select formControlName='bookType'>
+            <ion-select-option value="bird">Bird</ion-select-option>
+            <ion-select-option value="cat">Cat</ion-select-option>
+            <ion-select-option value="dog">Dog</ion-select-option>
+            <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label>请选择书籍的标签</ion-label>
+          <ion-select multiple="true" formControlName='tags'>
+            <ion-select-option value="bird">Bird</ion-select-option>
+            <ion-select-option value="cat">Cat</ion-select-option>
+            <ion-select-option value="dog">Dog</ion-select-option>
+            <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-item>
+      <ion-label position="floating">输入书籍封面地址</ion-label>
+      <ion-input type="text" formControlName='cover'></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">输入书籍内容*</ion-label>
+      <ion-textarea type="text" required=true formControlName='content'></ion-textarea>
+    </ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-button color="tertiary" expand="block" (click)="onSubmit()" [disabled]='!bookForm.valid'>提交</ion-button>
+      </ion-row>
+    </ion-grid>
+  </form>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+<button  style="right:60px; bottom:60px;position: fixed; z-index: 9999">
+  <input type="file" id="form_file" style="position: absolute;left: 0;top: 0;width: 56px;height: 56px;opacity: 0" (change)="fileUpload($event.target.files)">
+</button>

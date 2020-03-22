@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
+  public selected = 'books'
   public appPages = [
     {
       title: 'Inbox',
@@ -48,7 +50,8 @@ export class AppComponent implements OnInit {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private router: Router
   ) {
     this.initializeApp();
   }
@@ -61,9 +64,22 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    const path = window.location.pathname.split('folder/')[1];
+    const path = window.location.pathname.split('/')[1];
     if (path !== undefined) {
-      this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
+      this.selected = path.toLowerCase()
+    }
+    this.router.events.subscribe((event) => {
+      // example: NavigationStart, RoutesRecognized, NavigationEnd
+      this.changeRoute()
+    });
+  }
+
+  changeRoute(){
+    const path = window.location.pathname.split('/')[1];
+    if (path !== undefined) {
+      this.selected = path.toLowerCase()
+    }else{
+      this.selected = 'books'
     }
   }
 }
