@@ -27,7 +27,7 @@ export class BooksDetailComponent implements OnInit {
     this.getBookById()
   }
 
-  getBookById(callback=function(){}) {
+  getBookById(callback=function(temp){}) {
     this.bookService.getBookContentById({id: this.blogId, page: this.currentPage}).subscribe(res=>{
       this.book = res;
       this.titleService.setTitle(res.name);
@@ -35,23 +35,32 @@ export class BooksDetailComponent implements OnInit {
       let keyWords = (this.metaService.getTag('name= "keywords"') && this.metaService.getTag('name= "keywords"').content) || '创新方法,创新驿站,创新驿路,创新事件,创新,创新的事情,创新方法论,';
       keyWords += res.tags.join(',')
       this.metaService.updateTag({ name: 'keywords', content: keyWords })
-      callback()
+      callback(res)
     })
   }
 
   getPrePage(event) {
+    if(this.currentPage==1){
+      return;
+    }
     this.currentPage --
-    this.getBookById(function(){
+    this.getBookById(function(res){
       event.target.complete();
     });
   }
 
   getNextPage(event) {
     this.currentPage ++
-    this.getBookById(function(){
-      event.target.complete();
-      document.querySelector('ion-content').scrollToTop(500);
-    });
+    let that = this;
+    setTimeout(function(){
+      that.book.content = ''
+      that.getBookById(function(res){
+        event.target.complete();
+        if(res.content == ''){
+          event.target.disabled = true;
+        }
+        document.querySelector('ion-content').scrollToTop(500);
+      })}, 1000)
   }
 
 }

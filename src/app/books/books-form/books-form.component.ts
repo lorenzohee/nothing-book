@@ -84,7 +84,7 @@ export class BooksFormComponent implements OnInit {
         this.bookForm.patchValue({
           _id: res._id,
           name: res.name,
-          content: res.content,
+          content: '内容不允许更改，更改无效',
           bookType: res.bookType,
           tags: res.tags,
           cover: res.cover,
@@ -101,6 +101,10 @@ export class BooksFormComponent implements OnInit {
   }
 
   fileUpload(file){
+    if (file[0].name.indexOf('.txt') == -1){
+      alert('目前只支持txt格式文件，其他格式敬请期待');
+      return;
+    }
     let that = this;
     let render = new FileReader()
     const f = new Blob(file, {type: 'text/plain'});

@@ -20,7 +20,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="getNextPage($event)" threshold="0.1%">
+  <ion-infinite-scroll threshold="10px" (ionInfinite)="getNextPage($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
       loadingText="Getting more content...">

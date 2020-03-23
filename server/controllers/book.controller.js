@@ -60,7 +60,7 @@ async function detail (id) {
 async function getBookContent(obj){
   let book = await Book.findById(obj.id);
   let page = obj.page || 1;
-  let pageNum = obj.pageNum || 500;
+  let pageNum = obj.pageNum || 2000;
   book.content = book.content.substring(((page-1)*pageNum), (page*pageNum))
   book.page = page;
   book.pageNum = pageNum;
@@ -68,6 +68,8 @@ async function getBookContent(obj){
 }
 
 async function update (book, id) {
+  let bookTmp = await Book.findById(id)
+  book.content = bookTmp.content;
   return await Book.findByIdAndUpdate(id, book)
 }
 

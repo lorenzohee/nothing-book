@@ -39,7 +39,7 @@ export class BooksService {
   getBookContentById(obj): Observable<Book> {
     let params = new HttpParams().set('page', (obj.page || 1))
     params = params.set('id', obj.id)
-    params = params.set('pageNum', (obj.pageNum || 500))
+    params = params.set('pageNum', (obj.pageNum || 2000))
     if (obj.id) {
       return this.baseService.get({ url: `api/books/${obj.id}/content`, params: params })
     } else {
