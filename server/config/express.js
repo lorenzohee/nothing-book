@@ -92,11 +92,7 @@ app.use(express.static(path.join(__dirname, '../../uploads')))
 app.use(express.static(path.join(__dirname, '../../audio')))
 app.use(express.static(path.join(__dirname, '../../vendor')))
 app.use(/^((?!(api)).)*/, (req, res) => {
-  if (config.env !== 'development') {
-    res.render('index', { req });
-  } else {
-    res.sendFile(path.join(__dirname, distDir + '/index.html'));
-  }
+  res.sendFile(path.join(__dirname, distDir + '/index.html'));
   // res.sendFile(path.join(__dirname, distDir + '/index.html'));
 });
 // app.get('*', (req, res) => {

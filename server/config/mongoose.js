@@ -16,6 +16,10 @@ if (config.mongooseDebug) {
   mongoose.set('debug', (collectionName, method, query, doc) => {
     debug(`${collectionName}.${method}`, util.inspect(query, false, 20), doc);
   });
-  mongoose.set('debug', true);
+  if (config.env !== 'development') {
+    mongoose.set('debug', false);
+  } else {
+    mongoose.set('debug', true);
+  }
 }
 
