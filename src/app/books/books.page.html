@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-card *ngFor="let book of books$ | async" [routerLink]="['/books/summary/'+book._id]">
+    <ion-card *ngFor="let book of books" [routerLink]="['/books/summary/'+book._id]">
       <img [src]="book.cover || '../../assets/book_default.jpg'" style="width: 100%" />
       <ion-card-header>
         <ion-card-subtitle>{{ book.name }}</ion-card-subtitle>

@@ -3,7 +3,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { BooksService } from 'src/app/service/books.service';
-import { ReadVarExpr } from '@angular/compiler';
+import { CfgService } from 'src/app/service/cfg.service';
 
 @Component({
   selector: 'app-books-form',
@@ -12,27 +12,39 @@ import { ReadVarExpr } from '@angular/compiler';
 })
 export class BooksFormComponent implements OnInit {
 
-  uploadFile = '';
   bookForm = this.fb.group({
     _id: [''],
     name: ['', Validators.required],
     content: ['', Validators.required],
-    bookType: ['', Validators.required],
+    bookType: ['其他', Validators.required],
     tags: [[]],
     cover: [''],
-    showTime: [new Date(), Validators.required],
     author: [''],
     abstract: ['', Validators.required]
   })
 
   validateFlag = false;
 
-  bookTypes: any;
-  bookTags: any;
-  constructor(private fb: FormBuilder, private bookService: BooksService, private router: Router, private route: ActivatedRoute) { }
+  bookTypes: Array<string>;
+  bookTags: Array<string>;
+  constructor(private fb: FormBuilder, private bookService: BooksService, private router: Router, private route: ActivatedRoute, private cfgService: CfgService) { }
 
   ngOnInit() {
     this.getBookById();
+    this.getBookType();
+    this.getBookTag();
+  }
+
+  getBookType(){
+    this.cfgService.getCfgList({key: 'ARTICLE_TYPE'}).subscribe(res=>{
+      this.bookTypes = JSON.parse(res[0].valu)
+    })
+  }
+
+  getBookTag(){
+    this.cfgService.getCfgList({key: 'ARTICLE_TAG'}).subscribe(res=>{
+      this.bookTags = JSON.parse(res[0].valu)
+    })
   }
 
   onSubmit() {
@@ -50,33 +62,6 @@ export class BooksFormComponent implements OnInit {
     }
   }
 
-  handleFileInput(files: FileList) {
-    this.bookService.postBannerFile(files.item(0)).subscribe(res => {
-      if (res.filename) {
-        if (confirm('需要替代展示图片吗？')) {
-          this.bookForm.patchValue({
-            bannerUrl: `/${res.filename}`
-          })
-        } else {
-          let selBox = document.createElement('textarea');
-          selBox.style.position = 'fixed';
-          selBox.style.left = '0';
-          selBox.style.top = '0';
-          selBox.style.opacity = '0';
-          selBox.value = res.filename;
-          document.body.appendChild(selBox);
-          selBox.focus();
-          selBox.select();
-          document.execCommand('copy');
-          document.body.removeChild(selBox);
-          alert(`图片上传地址为：/${res.filename}, 已复制到粘贴板`)
-        }
-      } else {
-        alert('格式不正确或服务器错误，请重试')
-      }
-    })
-  }
-
   getBookById() {
     let id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -88,16 +73,11 @@ export class BooksFormComponent implements OnInit {
           bookType: res.bookType,
           tags: res.tags,
           cover: res.cover,
-          showTime: res.showTime,
           author: res.author,
           abstract: res.abstract
         })
       })
     }
-  }
-
-  goback() {
-    // this.location.back()
   }
 
   fileUpload(file){
@@ -112,6 +92,16 @@ export class BooksFormComponent implements OnInit {
       that.bookForm.patchValue({
         content: this.result
       })
+      if(that.bookForm.value.name==''){
+        that.bookForm.patchValue({
+          name: file[0].name
+        })
+      }
+      if(that.bookForm.value.abstract==''){
+        that.bookForm.patchValue({
+          abstract: this.result.toString().substring(0,200)
+        })
+      }
     }
     render.readAsText(f, 'GB2312')
   }

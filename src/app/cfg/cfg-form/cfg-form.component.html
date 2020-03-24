@@ -1,0 +1,21 @@
+<div class="container py-4">
+  <form [formGroup]='cfgForm'>
+    <ion-item>
+      <ion-label position="floating">输入标题</ion-label>
+      <ion-input type="text" formControlName='title'></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">输入关键词*</ion-label>
+      <ion-input type="text" formControlName='key'></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">输入内容*</ion-label>
+      <ion-textarea type="text" formControlName='valu' rows=5></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">输入备注信息*</ion-label>
+      <ion-textarea type="text" formControlName='note' rows=5></ion-textarea>
+    </ion-item>
+    <ion-button color="tertiary" expand="block" (click)="onSubmit()" [disabled]='!cfgForm.valid'>提交</ion-button>
+  </form>
+</div>

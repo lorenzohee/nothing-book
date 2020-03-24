@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
+import { CfgService } from './service/cfg.service';
 
 @Component({
   selector: 'app-root',
@@ -13,45 +14,13 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public selected = 'books'
-  public appPages = [
-    {
-      title: 'Inbox',
-      url: '/folder/Inbox',
-      icon: 'mail'
-    },
-    {
-      title: 'Outbox',
-      url: '/folder/Outbox',
-      icon: 'paper-plane'
-    },
-    {
-      title: 'Favorites',
-      url: '/folder/Favorites',
-      icon: 'heart'
-    },
-    {
-      title: 'Archived',
-      url: '/folder/Archived',
-      icon: 'archive'
-    },
-    {
-      title: 'Trash',
-      url: '/folder/Trash',
-      icon: 'trash'
-    },
-    {
-      title: 'Spam',
-      url: '/folder/Spam',
-      icon: 'warning'
-    }
-  ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-
+  public bookTypes = []
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private router: Router
+    private router: Router, 
+    private cfgService: CfgService
   ) {
     this.initializeApp();
   }
@@ -72,6 +41,13 @@ export class AppComponent implements OnInit {
       // example: NavigationStart, RoutesRecognized, NavigationEnd
       this.changeRoute()
     });
+    this.getBookType()
+  }
+
+  getBookType(){
+    this.cfgService.getCfgList({key: 'ARTICLE_TYPE'}).subscribe(res=>{
+      this.bookTypes = JSON.parse(res[0].valu)
+    })
   }
 
   changeRoute(){

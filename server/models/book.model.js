@@ -14,6 +14,7 @@ const BookSchema = new mongoose.Schema({
   },
   content: {
     type: String,
+    trim: true,
     required: true
   },
   showTime: {

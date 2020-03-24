@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Cfgs</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-card *ngFor="let cfg of cfgs$ | async">
+      <ion-card-header>
+        <ion-card-subtitle>{{cfg._id}}</ion-card-subtitle>
+        <ion-card-title>{{cfg.title}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        {{cfg.key}}:{{cfg.valu}}
+      </ion-card-content>
+        <ion-button type="button"  color="info"  class="btn-sm"
+        [routerLink]="['/cfgs', cfg._id, 'edit']">编辑</ion-button>
+      <ion-button type="button"  color="danger"  (click)="deleteCfg(cfg._id)"
+        class="btn-sm">删除</ion-button>
+    </ion-card>
+  </ion-list>
+</ion-content>

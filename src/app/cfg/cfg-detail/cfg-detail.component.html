@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <!--Section: Products v.4-->
+  <section class="pb-3" *ngIf="cfg$ | async as cfg">
+    <!--Grid row-->
+    <div class="row">
+      <!--Grid column-->
+      <div class="w-100 mb-4">
+        <!--Collection card-->
+        <div class="collection-card z-depth-1-half">
+          <!--Card image-->
+          <div class="view zoom waves-light">
+            <div class="w-100 display-4 text-center"
+              style="position: absolute; bottom: 3rem; padding: 1.2rem;background-color: rgba(255,255,255,.7);">
+              <a>
+                <p><strong class="text-small">{{ cfg.title }}</strong></p>
+              </a>
+              <p>
+                <a class="btn btn-tw bg-green-400 color-white mr-4" [routerLink]="['/cfgs', cfg._id, 'edit']">
+                  <i class="far fa-edit pr-2"></i>
+                  <span class="clearfix d-none d-md-inline-block">编辑</span>
+                </a>
+                <!-- Google+ -->
+                <a class="btn btn-gplus bg-red-400" (click)="deleteCfg(cfg._id)">
+                  <i class="far fa-trash-alt pr-2"></i>
+                  <span class="clearfix d-none d-md-inline-block">删除</span>
+                </a>
+              </p>
+            </div>
+          </div>
+          <!--Card image-->
+        </div>
+        <!--Collection card-->
+      </div>
+      <!--Grid column-->
+    </div>
+    <!--Grid row-->
+    <div class="grey-text container" style="white-space: pre-line;">{{cfg.key}}</div>
+    <div class="grey-text container" style="white-space: pre-line;">{{cfg.valu}}</div>
+    <div class="grey-text container" style="white-space: pre-line;">{{cfg.note}}</div>
+  </section>
+  <!--Section: Products v.4-->
+</div>

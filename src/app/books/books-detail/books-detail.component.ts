@@ -3,6 +3,7 @@ import { Book } from 'src/app/model/book';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { BooksService } from 'src/app/service/books.service';
 import { Title, Meta } from '@angular/platform-browser';
+import { BooksFrontService } from 'src/app/frontService/booksFront.service';
 
 @Component({
   selector: 'app-books-detail',
@@ -19,17 +20,22 @@ export class BooksDetailComponent implements OnInit {
     private bookService: BooksService,
     private titleService: Title,
     private metaService: Meta,
+    private bookFrontService: BooksFrontService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
   ngOnInit() {
     this.blogId = this.route.snapshot.params.id;
-    this.getBookById()
+    this.bookFrontService.getDetailByBookId(this.blogId).then(res=>{
+      this.currentPage = res.current_page
+    }).finally(()=>this.getBookById())
   }
 
   getBookById(callback=function(temp){}) {
     this.bookService.getBookContentById({id: this.blogId, page: this.currentPage}).subscribe(res=>{
       this.book = res;
+      this.bookFrontService.saveBookInfo({book_id: res._id, book_name: res.name, book_cover: res.cover, current_page: this.currentPage})
+      //FIXME: change the page title info
       this.titleService.setTitle(res.name);
       this.metaService.updateTag({ name: 'description', content: res.name })
       let keyWords = (this.metaService.getTag('name= "keywords"') && this.metaService.getTag('name= "keywords"').content) || '创新方法,创新驿站,创新驿路,创新事件,创新,创新的事情,创新方法论,';

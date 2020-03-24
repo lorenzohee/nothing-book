@@ -6,10 +6,10 @@ const cfgCtrl = require('../controllers/cfg.controller');
 const router = express.Router();
 module.exports = router;
 
-router.post('/', passport.authenticate('jwt', { session: false }), insert);
+router.post('/', insert);
 router.get('/', index);
 router.put('/:id', passport.authenticate('jwt', { session: false }), update);
-router.get('/:id', passport.authenticate('jwt', { session: false }), detail);
+router.get('/:id', detail);
 router.delete('/:id', passport.authenticate('jwt', { session: false }), destroy);
 
 async function insert (req, res) {

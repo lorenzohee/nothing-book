@@ -18,20 +18,29 @@
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection="root" [routerLink]="['/books']" lines="none" detail="false">
+            <ion-item routerDirection="root" [routerLink]="['/books', {'type': 'host'}]" lines="none" detail="false">
               <ion-icon slot="start" ios="heart-outline" md="heart-sharp"></ion-icon>
               <ion-label>最热书籍</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" [routerLink]="['/books', {'type': 'reading'}]" lines="none" detail="false">
+              <ion-icon slot="start" ios="reader-outline" md="reader-sharp"></ion-icon>
+              <ion-label>正在看</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
 
         <ion-list id="labels-list">
           <ion-list-header>Labels</ion-list-header>
-          <ion-item *ngFor="let label of labels" lines="none">
+          <ion-item lines="none" *ngFor="let type of bookTypes" [routerLink]="['/books',{'bookType': type}]">
             <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-            <ion-label>{{ label }}</ion-label>
+            <ion-label>{{type}}</ion-label>
           </ion-item>
         </ion-list>
+        <ion-item>
+          版权声明 | 联系我
+        </ion-item>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

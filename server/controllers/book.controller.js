@@ -1,25 +1,11 @@
-const Joi = require('joi');
 const Book = require('../models/book.model');
 const config = require('../config/config')
 
-const bookSchema = Joi.object({
-  name: Joi.string().required(),
-  content: Joi.string().required(),
-  bookType: Joi.string().required(),
-  cover: Joi.any(),
-  abstract: Joi.string().required(),
-  tags: Joi.array(),
-  showTime: Joi.any(),
-  author: Joi.string()
-})
-
-
 module.exports = {
-  insert, index, update, destroy, detail, count, getBookContent
+  insert, index, update, destroy, detail, getBookContent
 }
 
 async function insert (book) {
-  book = await Joi.validate(book, bookSchema, { abortEarly: false });
   return await new Book(book).save();
 }
 
@@ -47,10 +33,6 @@ async function index (obj) {
   } else {
     return await Book.find(obj).select('-content').sort({ '_id': -1 }).skip((page - 1) * pageNum).limit(pageNum);
   }
-}
-
-async function count (obj) {
-  return await Book.find().sort({ '_id': -1 }).countDocuments();
 }
 
 async function detail (id) {
