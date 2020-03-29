@@ -3,8 +3,8 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi@ionicframework.com</ion-note>
+          <ion-list-header>创新书店</ion-list-header>
+          <ion-note>分享书籍，更多享受</ion-note>
           <ion-menu-toggle auto-hide="false">
             <ion-item routerDirection="root" routerLink="books" lines="none" detail="false" [class.selected]="selected == 'books'">
               <ion-icon slot="start" ios="book-outline" md="book-sharp"></ion-icon>
@@ -38,7 +38,7 @@
             <ion-label>{{type}}</ion-label>
           </ion-item>
         </ion-list>
-        <ion-item>
+        <ion-item routerLink="about">
           版权声明 | 联系我
         </ion-item>
       </ion-content>

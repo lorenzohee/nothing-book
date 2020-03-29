@@ -31,7 +31,7 @@ router.post('/upload', passport.authenticate('jwt', { session: false }), upload.
 // router.post('/', passport.authenticate('jwt', { session: false }), insert);
 router.post('/', insert);
 router.get('/', index);
-router.put('/:id', passport.authenticate('jwt', { session: false }), update);
+router.put('/:id', update);
 router.get('/:id/content', getBookContent)
 router.get('/:id', detail);
 router.delete('/:id', passport.authenticate('jwt', { session: false }), destroy);
