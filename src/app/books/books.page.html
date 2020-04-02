@@ -1,18 +1,22 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Books</ion-title>
+    <ion-title>书籍列表</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-card *ngFor="let book of books" [routerLink]="['/books/summary/'+book._id]">
-      <img [src]="book.cover || '../../assets/book_default.jpg'" style="width: 100%" />
-      <ion-card-header>
-        <ion-card-subtitle>{{ book.name }}</ion-card-subtitle>
-      </ion-card-header>
-    </ion-card>
-  </ion-list>
+  <ion-grid>
+    <ion-row>
+      <ion-col size='4' sizeMd='3' sizeLg='2' *ngFor="let book of books">
+        <ion-card [routerLink]="['/books/summary/'+book._id]">
+          <img [src]="book.cover || '../../assets/book_default.jpg'" style="width: 100%" />
+          <ion-card-header>
+            <ion-card-subtitle>{{ book.name }}</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"

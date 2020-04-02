@@ -1,5 +1,15 @@
 ion-card {
-    width: 30%;
-    display:inline-block;
-    margin: 5px;
+    @media (max-width:768px){
+        margin: 0;
+    }
+}
+
+ion-card-header{
+    padding: 10px;
+}
+
+ion-card-subtitle{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

@@ -43,7 +43,9 @@ async function getBookContent(obj){
   let book = await Book.findById(obj.id);
   let page = obj.page || 1;
   let pageNum = obj.pageNum || 2000;
-  book.content = book.content.substring(((page-1)*pageNum), (page*pageNum))
+  let strStart = page > 1 ? (page-1) * pageNum-50 : 0;
+  let strEnd = page*pageNum
+  book.content = book.content.substring(strStart, strEnd)
   book.page = page;
   book.pageNum = pageNum;
   return book;

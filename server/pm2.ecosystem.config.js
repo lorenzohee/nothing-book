@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "nothingbookapi",
-      script: "./index.js",
+      script: "./server/index.js",
       watch: false,
       ignore_watch : [ "../logs/*", "../node_modules","../.git", "../uploads/*","../audio/*", "../private/files/**/*", "../private/imgs/**/*" ],
       env_development: {

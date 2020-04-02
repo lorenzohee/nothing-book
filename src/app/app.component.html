@@ -33,14 +33,18 @@
 
         <ion-list id="labels-list">
           <ion-list-header>Labels</ion-list-header>
-          <ion-item lines="none" *ngFor="let type of bookTypes" [routerLink]="['/books',{'bookType': type}]">
-            <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-            <ion-label>{{type}}</ion-label>
-          </ion-item>
+          <ion-menu-toggle auto-hide="false" *ngFor="let type of bookTypes">
+            <ion-item lines="none" routerDirection="root" [routerLink]="['/books',{'bookType': type}]">
+              <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
+              <ion-label>{{type}}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
         </ion-list>
-        <ion-item routerLink="about">
-          版权声明 | 联系我
-        </ion-item>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="about">
+            版权声明 | 联系我
+          </ion-item>
+        </ion-menu-toggle>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
