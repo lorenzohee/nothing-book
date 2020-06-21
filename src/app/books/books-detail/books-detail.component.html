@@ -11,6 +11,7 @@
   <ion-refresher slot="fixed" (ionRefresh)="getPrePage($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+  <app-commemoration-ad></app-commemoration-ad>
   <ion-grid *ngIf="book">
     <ion-row>
       <ion-col>
@@ -21,10 +22,14 @@
     </ion-row>
   </ion-grid>
   <img src="../../../assets/book_rent.jpg" style="width: 100%" />
-  <ion-infinite-scroll threshold="10px" (ionInfinite)="getNextPage($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Getting more content...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  <app-commemoration-ad></app-commemoration-ad>
+  <ion-row>
+    <ion-col style="text-align: center;">
+      <ion-button color="secondary" size="small" (click)="getPrePageContent()">上一页</ion-button>
+    </ion-col>
+    <ion-col style="text-align: center;">
+      <ion-button color="primary" size="small" (click)="getNextPageContent()">下一页</ion-button>
+    </ion-col>
+  </ion-row>
+  <app-commemoration-ad></app-commemoration-ad>
 </ion-content>

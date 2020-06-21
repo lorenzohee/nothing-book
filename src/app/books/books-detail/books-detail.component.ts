@@ -38,7 +38,7 @@ export class BooksDetailComponent implements OnInit {
       //FIXME: change the page title info
       this.titleService.setTitle(res.name);
       this.metaService.updateTag({ name: 'description', content: res.name })
-      let keyWords = (this.metaService.getTag('name= "keywords"') && this.metaService.getTag('name= "keywords"').content) || '创新方法,创新驿站,创新驿路,创新事件,创新,创新的事情,创新方法论,';
+      let keyWords = (this.metaService.getTag('name= "keywords"') && this.metaService.getTag('name= "keywords"').content) || '小说,成人,英文,英文原著,英文小说,成人小说,H文,';
       keyWords += res.tags.join(',')
       this.metaService.updateTag({ name: 'keywords', content: keyWords })
       callback(res)
@@ -55,6 +55,14 @@ export class BooksDetailComponent implements OnInit {
     });
   }
 
+  getPrePageContent(){
+    if(this.currentPage==1){
+      return;
+    }
+    this.currentPage --
+    this.getBookById();
+  }
+
   getNextPage(event) {
     this.currentPage ++
     let that = this;
@@ -67,6 +75,15 @@ export class BooksDetailComponent implements OnInit {
         }
         document.querySelector('ion-content').scrollToTop(500);
       })}, 1000)
+  }
+
+  getNextPageContent() {
+    this.currentPage ++
+    let that = this;
+    that.book.content = ''
+    that.getBookById(function(res){
+      document.querySelector('ion-content').scrollToTop(500);
+    })
   }
 
 }

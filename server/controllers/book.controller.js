@@ -15,6 +15,10 @@ async function index (obj) {
     page = obj.page;
     delete obj.page
   }
+  if(obj.search) {
+    obj.name = {$regex: obj.search}
+    delete obj.search;
+  }
   let pageNum = obj.pageNum || config.paginationNum;
   if (obj.bookType === 'undefined') {
     delete obj.bookType;

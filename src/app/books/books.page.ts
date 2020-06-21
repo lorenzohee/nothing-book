@@ -4,6 +4,8 @@ import { Title, Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BooksService } from '../service/books.service';
 import { BooksFrontService } from '../frontService/booksFront.service';
+import { Subject, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap, scan } from 'rxjs/operators';
 
 @Component({
   selector: 'app-books',
@@ -14,9 +16,8 @@ export class BooksPage implements OnInit {
   listParam: {}
   books: Book[]
   currentPage = 1
-  constructor(private bookService: BooksService,
-    private titleService: Title,
-    private metaService: Meta, 
+  searchBarShow = false;
+  constructor(private bookService: BooksService, 
     private route: ActivatedRoute, 
     private bookFrontService: BooksFrontService,
     private router: Router) { }
@@ -26,14 +27,10 @@ export class BooksPage implements OnInit {
     this.listParam = {
       page: params.page || 1,
       bookType: params.bookType,
-      tags: params.tags,
-      type: params.type
+      tags: params.tags || [],
+      type: params.type || [],
     };
     this.getBookList();
-    //TODO: change the page title
-    // this.titleService.setTitle('创新驿路');
-    this.metaService.updateTag({ name: 'description', content: '创新驿路-提供最新创新方法，创新事务' })
-    this.metaService.updateTag({ name: 'keywords', content: "创新方法,创新驿站,创新驿路,创新事件,创新,创新的事情,创新方法论" })
   }
 
   loadData(event) {
@@ -72,5 +69,17 @@ export class BooksPage implements OnInit {
         this.books = res
       })
     }
+  }
+
+  showSearchToggle() {
+    this.searchBarShow = !this.searchBarShow;
+  }
+
+  searchBooks(searchTitle) {
+    this.listParam = Object.assign(this.listParam, {search: searchTitle})
+    this.bookService.getBookList(this.listParam).subscribe(res=>{
+      this.books = res
+      this.searchBarShow = !this.searchBarShow;
+    })
   }
 }

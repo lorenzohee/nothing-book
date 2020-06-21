@@ -1,6 +1,17 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
     <ion-title>书籍列表</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button color="secondary" (click)="showSearchToggle()">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="searchBarShow">
+    <ion-searchbar placeholder="Search Favorites" (ionChange)="searchBooks($event.target.value)" inputmode="search" debounce="500"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 

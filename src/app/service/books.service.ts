@@ -12,20 +12,7 @@ export class BooksService {
   constructor(private baseService: BaseService) { }
 
   getBookList(obj): Observable<Book[]> {
-    let params = new HttpParams().set('page', obj.page)
-    if (obj.bookType) {
-      params = params.set('bookType', obj.bookType)
-    }
-    if (obj.tags) {
-      params = params.set('tags', obj.tags)
-    }
-    if (obj.pageNum) {
-      params = params.set('pageNum', obj.pageNum)
-    }
-    if (obj.bookNum) {
-      params = params.set('bookNum', obj.bookNum)
-    }
-    return this.baseService.get({ url: 'api/books', params: params })
+    return this.baseService.get({ url: 'api/books', params: obj })
   }
 
   getBookById(id: string): Observable<Book> {

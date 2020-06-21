@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
 import { CfgService } from './service/cfg.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +14,8 @@ import { CfgService } from './service/cfg.service';
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
-  public selected = 'books'
-  public bookTypes = []
+  public selected = 'books';
+  public bookTypes = [];
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -58,4 +59,5 @@ export class AppComponent implements OnInit {
       this.selected = 'books'
     }
   }
+
 }
